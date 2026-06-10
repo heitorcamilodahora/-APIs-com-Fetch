@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Sistema da Escola</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 600px;
+      margin: 40px auto;
+      padding: 0 20px;
+      background-color: #f4f4f4;
+    }
+
+    h1 {
+      color: #333;
+    }
+
+    button {
+      background-color: #4a90d9;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      margin: 5px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    button:hover {
+      background-color: #357ab8;
+    }
+
+    #resultado {
+      margin-top: 20px;
+      background-color: white;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      padding: 20px;
+      min-height: 60px;
+    }
+
+    ul {
+      padding-left: 20px;
+    }
+
+    li {
+      margin-bottom: 6px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Sistema da Escola</h1>
+
+  <button onclick="mostrarAlunos()">Mostrar Alunos</button>
+  <button onclick="mostrarCursos()">Mostrar Cursos</button>
+  <button onclick="mostrarProfessor()">Mostrar Professor</button>
+
+  <div id="resultado">
+    <p>Clique em um botão para ver as informações.</p>
+  </div>
+
+  <script>
+    const resultado = document.getElementById('resultado');
+
+    function mostrarAlunos() {
+      fetch('https://literate-lamp-4x45xxv5rq6hqqv5-3000.app.github.dev/alunos')
+        .then(function(response) {
+          return response.json();
+        })
+        .then(function(alunos) {
+          let html = '<h2>Alunos</h2><ul>';
+          alunos.forEach(function(aluno) {
+            html += '<li>ID: ' + aluno.id + ' | Nome: ' + aluno.nome + ' | Idade: ' + aluno.idade + '</li>';
+          });
+          html += '</ul>';
+          resultado.innerHTML = html;
+        });
+    }
+
+    function mostrarCursos() {
+      fetch('https://literate-lamp-4x45xxv5rq6hqqv5-3000.app.github.dev/cursos')
+        .then(function(response) {
+          return response.json();
+        })
+        .then(function(cursos) {
+          let html = '<h2>Cursos</h2><ul>';
+          cursos.forEach(function(item) {
+            html += '<li>ID: ' + item.id + ' | Curso: ' + item.curso + '</li>';
+          });
+          html += '</ul>';
+          resultado.innerHTML = html;
+        });
+    }
+
+    function mostrarProfessor() {
+      fetch('https://literate-lamp-4x45xxv5rq6hqqv5-3000.app.github.dev/professor')
+        .then(function(response) {
+          return response.json();
+        })
+        .then(function(professor) {
+          resultado.innerHTML =
+            '<h2>Professor</h2>' +
+            '<p>Nome: ' + professor.nome + '</p>' +
+            '<p>Disciplina: ' + professor.disciplina + '</p>';
+        });
+    }
+  </script>
+
+</body>
+</html>
